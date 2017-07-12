@@ -1,47 +1,40 @@
 import UIKit
 
-struct Album {
+struct Acknowledgement {
     let title: String
-    let artist: Artist
-    init(title: String, artist: Artist) {
+    let description: String
+    init(title: String, description: String) {
         self.title = title
-        self.artist = artist
+        self.description = description
     }
 }
 
-struct Artist {
-    let name: String
-}
-
-let beatles = Artist(name: "example")
-
-let albums = [
-    Album(title: "Please Please Me", artist: beatles),
-    Album(title: "With The Beatles", artist: beatles),
-    Album(title: "A Hard Day's Night", artist: beatles),
-    Album(title: "Beatles For Sale", artist: beatles),
-    Album(title: "Help!", artist: beatles),
-    Album(title: "Rubber Soul", artist: beatles),
-    Album(title: "Revolver", artist: beatles),
-    Album(title: "Sgt. Pepper's Lonely Hearts Club Band", artist: beatles),
-    Album(title: "The Beatles", artist: beatles),
-    Album(title: "Yellow Submarine", artist: beatles),
-    Album(title: "Abbey Road", artist: beatles),
-    Album(title: "Let it be", artist: beatles),
+let acknowledgements = [
+    Acknowledgement(title: "Please Please Me", description: "MIT"),
+    Acknowledgement(title: "With The Beatles", description: "MIT"),
+    Acknowledgement(title: "A Hard Day's Night", description: "MIT"),
+    Acknowledgement(title: "Beatles For Sale", description: "MIT"),
+    Acknowledgement(title: "Help!", description: "MIT"),
+    Acknowledgement(title: "Rubber Soul", description: "MIT"),
+    Acknowledgement(title: "Revolver", description: "MIT"),
+    Acknowledgement(title: "Sgt. Pepper's Lonely Hearts Club Band", description: "MIT"),
+    Acknowledgement(title: "The Beatles", description: "MIT"),
+    Acknowledgement(title: "Yellow Submarine", description: "MIT"),
+    Acknowledgement(title: "Abbey Road", description: "MIT"),
+    Acknowledgement(title: "Let it be", description: "MIT"),
 ]
 
 // MARK: Table View
 
-final class AlnumTableViewController: UITableViewController {
+final class AcknowledgementsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.blue
-
     }
 
     override func tableView(_ tableView: UITableView,
                             numberOfRowsInSection section: Int) -> Int {
-        return albums.count
+        return acknowledgements.count
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -55,10 +48,24 @@ final class AlnumTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView,
                             cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
-        cell.textLabel?.text = albums[indexPath.row].title
-        cell.detailTextLabel?.text = albums[indexPath.row].artist.name
+        cell.textLabel?.text = acknowledgements[indexPath.row].title
+        cell.detailTextLabel?.text = acknowledgements[indexPath.row].description
 
         return cell
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        acknowledgements[indexPath.item].title
+
+        AcknowledgementsDetailViewController()
+    }
+}
+
+// MARK: UIView
+final class AcknowledgementsDetailViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = UIColor.yellow
     }
 }
 
@@ -67,8 +74,8 @@ import PlaygroundSupport
 
 PlaygroundPage.current.needsIndefiniteExecution = true
 
-let viewController = AlnumTableViewController()
-viewController.title = "Albums"
+let viewController = AcknowledgementsViewController()
+viewController.title = "Acknowledgements"
 let navigationController = UINavigationController(rootViewController: viewController)
 navigationController.view.frame = CGRect(x: 0, y: 0, width: 320, height: 480)
 
